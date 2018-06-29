@@ -1,0 +1,14 @@
+{
+  "description": "A Markdown renderer that uses the Commonmark spec",
+  "name": "@polymer/markdown-element",
+  "version": "0.1.0",
+  "main": "index.js",
+  "dependencies": {
+    "@polymer/polymer": "^3.0.2",
+    "commonmark": "^0.28.1",
+    "prismjs": "^1.15.0"
+  },
+  "devDependencies": {
+    "@webcomponents/webcomponentsjs": "^2.0.2"
+  }
+}
