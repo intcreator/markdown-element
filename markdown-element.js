@@ -1,6 +1,6 @@
-import { PolymerElement, html } from './node_modules/@polymer/polymer/polymer-element.js';
-import './node_modules/commonmark/dist/commonmark.js';
-import './node_modules/prismjs/prism.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
+import 'commonmark/dist/commonmark.js';
+import 'prismjs/prism.js';
 
 class MarkdownElement extends PolymerElement {
     

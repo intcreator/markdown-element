@@ -1,33 +1,34 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>markdown-element demo</title>
+        <title>markdown-element demo</title>
 
-    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+        <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
 
-    <script type="module">
-      import '@polymer/iron-demo-helpers/demo-pages-shared-styles';
-      import '@polymer/iron-demo-helpers/demo-snippet';
-    </script>
+        <script type="module">
+        //   import '@polymer/iron-demo-helpers/demo-pages-shared-styles';
+        //   import '@polymer/iron-demo-helpers/demo-snippet';
+        </script>
 
-    <script type="module" src="../markdown-element.js"></script>
+        <script type="module" src="../markdown-element.js"></script>
 
-    <custom-style>
-      <style is="custom-style" include="demo-pages-shared-styles">
-      </style>
-    </custom-style>
-  </head>
-  <body>
-    <div class="vertical-section-container centered">
-      <h3>Basic markdown-element demo</h3>
-      <demo-snippet>
-        <template>
-          <markdown-element></markdown-element>
-        </template>
-      </demo-snippet>
-    </div>
-  </body>
+        <custom-style>
+        <style is="custom-style" include="demo-pages-shared-styles">
+        </style>
+        </custom-style>
+    </head>
+    <body>
+        <div class="vertical-section-container centered">
+        <h3>Basic markdown-element demo</h3>
+        <markdown-element markdown="This **demo** uses the `markdown` _attribute_, not `src`">
+            <div slot="markdown-html"></div>
+        </markdown-element>
+        <markdown-element src="./demo.md">
+            <div slot="markdown-html"></div>
+        </markdown-element>
+        </div>
+    </body>
 </html>
