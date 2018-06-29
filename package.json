@@ -2,7 +2,7 @@
   "description": "A Markdown renderer that uses the Commonmark spec",
   "name": "@polymer/markdown-element",
   "version": "0.1.0",
-  "main": "index.js",
+  "main": "markdown-element.js",
   "dependencies": {
     "@polymer/polymer": "^3.0.2",
     "commonmark": "^0.28.1",
