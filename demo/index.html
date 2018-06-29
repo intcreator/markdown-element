@@ -23,6 +23,12 @@
     <body>
         <div class="vertical-section-container centered">
         <h3>Basic markdown-element demo</h3>
+        <markdown-element>
+            <div slot="markdown-html"></div>
+            <script type="text/markdown">
+                This demo uses a `<script>` tag.
+            </script>
+        </markdown-element>
         <markdown-element markdown="This **demo** uses the `markdown` _attribute_, not `src`">
             <div slot="markdown-html"></div>
         </markdown-element>

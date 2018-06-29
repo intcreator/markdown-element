@@ -15,7 +15,7 @@ class MarkdownElement extends PolymerElement {
             </style>
 
             <slot name="markdown-html">
-                <div id="content"></div>
+                <div id="content">No Markdown specified or failed to load</div>
             </slot>
         `
     }
@@ -51,6 +51,8 @@ class MarkdownElement extends PolymerElement {
         if(this.markdown || this.src) return;
         // otherwise look for a script tag
         const markdownScript = this.querySelector('script[type="text/markdown"]')
+        // set the markdown from the script tag, trimming the whitespace
+        this.markdown = markdownScript.text.trim();
         // if there's no script tag, return
         if(!markdownScript) return;
     }
@@ -62,7 +64,7 @@ class MarkdownElement extends PolymerElement {
                 this.markdown = await response.text();
             })
             .catch(e => {
-                console.error(e)
+                this.markdown = 'Failed to read Markdown source.'
             })
     }
 
