@@ -1,6 +1,6 @@
 {
   "description": "A Markdown renderer that uses the Commonmark spec",
-  "name": "@polymer/markdown-element",
+  "name": "@intcreator/markdown-element",
   "version": "0.1.0",
   "main": "markdown-element.js",
   "dependencies": {
