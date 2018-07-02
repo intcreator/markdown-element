@@ -1,46 +1,36 @@
-import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
+import { LitElement, html } from '@polymer/lit-element/lit-element.js';
+import { unsafeHTML } from 'lit-html/lib/unsafe-html.js';
 import 'commonmark/dist/commonmark.js';
 import 'prismjs/prism.js';
 
-class MarkdownElement extends PolymerElement {
+class MarkdownElement extends LitElement {
     
-    static get template() {
+    _render({ markdown, src }) {
         return html`
             <style>
+
+                ${ fetch('../node_modules/prismjs/themes/prism.css').then(res => res.text()) }
 
                 :host {
                     display: block;
                 }
 
             </style>
-
-            <slot name="markdown-html">
+            <h1>hey</h1>
+            ${ this.renderMarkdown(markdown, src) }
+            <!-- <slot name="markdown-html">
                 <div id="content">No Markdown specified or failed to load</div>
-            </slot>
+            </slot> -->
         `
     }
 
     static get properties() {
         return {
             markdown: {
-                type: String,
-                observer(newValue, oldValue) {
-                    // parse and render Markdown
-                    const reader = new commonmark.Parser();
-                    const writer = new commonmark.HtmlRenderer();
-                    const html = writer.render(reader.parse(newValue));
-                    // set HTML of slot (if given) or div
-                    const target = this.querySelector('[slot="markdown-html"]') || this.shadowRoot.querySelector('#content')
-                    target.innerHTML = html;
-                    // highlight all code blocks under the target
-                    const things = Prism.highlightAllUnder(target, false);
-                }
+                type: String
             },
             src: {
-                type: String,
-                observer(newValue, oldValue) {
-                    this.fetchMarkdown(newValue);
-                }
+                type: String
             }
         };
     }
@@ -50,22 +40,38 @@ class MarkdownElement extends PolymerElement {
         // return if markdown or a reference was passed in through a data binding
         if(this.markdown || this.src) return;
         // otherwise look for a script tag
-        const markdownScript = this.querySelector('script[type="text/markdown"]')
+        const markdownScript = this.querySelector('script[type="text/markdown"]');
         // set the markdown from the script tag, trimming the whitespace
         this.markdown = markdownScript.text.trim();
-        // if there's no script tag, return
-        if(!markdownScript) return;
+    }
+
+    _didRender(props) {
+        // if(Object.keys(props).length === 0 && props.constructor === Object) return;
+        console.log(props, this.shadowRoot.querySelector('p'))
+        // this.shadowRoot.querySelector('code').style = 'background-color: red;';
+        // Prism.highlightAllUnder(this.shadowRoot.querySelector('code'), false);
     }
 
     // fetch the markdown and set it locally
     async fetchMarkdown(src) {
+        let text;
         await fetch(src)
             .then(async response => {
-                this.markdown = await response.text();
+                text = await response.text()
             })
             .catch(e => {
-                this.markdown = 'Failed to read Markdown source.'
+                return 'Failed to read Markdown source.'
             })
+        return text;
+    }
+
+    async renderMarkdown(markdown, src) {
+        if(src) markdown = await this.fetchMarkdown(src);
+        if(!markdown) markdown = 'No Markdown specified or failed to load.';
+        // parse and render Markdown
+        const reader = new commonmark.Parser();
+        const writer = new commonmark.HtmlRenderer();
+        return html`${unsafeHTML(writer.render(reader.parse(markdown)))}`;
     }
 
 }
