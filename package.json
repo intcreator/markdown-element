@@ -2,7 +2,11 @@
   "description": "A Markdown renderer that uses the Commonmark spec",
   "name": "@intcreator/markdown-element",
   "version": "0.1.0",
+  "author": "Brandon der Blätter (https://intcreator.com)",
   "main": "markdown-element.js",
+  "homepage": "https://github.com/intcreator/markdown-element",
+  "bugs": "https://github.com/intcreator/markdown-element/issues",
+  "license" : "SEE LICENSE IN LICENSE.txt",
   "dependencies": {
     "@polymer/polymer": "^3.0.2",
     "commonmark": "^0.28.1",
