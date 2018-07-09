@@ -17,8 +17,8 @@ class MarkdownElement extends LitElement {
                 }
 
             </style>
-            <h1>hey</h1>
-            ${ until(this.renderMarkdown(markdown, src), 'Loading...') }
+            <p>Render successful</p>
+            ${ until(this.renderedMarkdown, 'Loading...') }
         `;
     }
 
@@ -29,39 +29,63 @@ class MarkdownElement extends LitElement {
             },
             src: {
                 type: String
+            },
+            scriptTag: {
+                type: Object
+            },
+            renderedMarkdown: {
+                type: String
             }
         };
     }
 
+    // render the markdown using the `markdown` attribute
+    // `markdown` is set either by the user or the component
+    set markdown(markdown) {
+        this
+            .renderMarkdown(markdown)
+            .then(r => this.renderedMarkdown = r)
+    }
+
+    // fetch the markdown using the `src` attribute
+    // note: overrides `markdown` attribute
+    set src(src) {
+        this
+            .fetchMarkdown(src)
+            .then(r => this.markdown = r);
+    }
+
+    // set the markdown from the script tag, trimming the whitespace
+    // note: overrides `src` and `markdown` attributes
+    set scriptTag(scriptTag) {
+        if(scriptTag) this.markdown = scriptTag.text.trim();
+    }
+
     connectedCallback() {
         super.connectedCallback();
-        // return if markdown or a reference was passed in through a data binding
-        if(this.markdown || this.src) return;
-        // otherwise look for a script tag
-        const markdownScript = this.querySelector('script[type="text/markdown"]');
-        // set the markdown from the script tag, trimming the whitespace
-        this.markdown = markdownScript.text.trim();
+        // look for a script tag
+        this.scriptTag = this.querySelector('script[type="text/markdown"]');
+        
     }
 
     async _didRender() {
-        // await a dummy renderMarkdown so shadowRoot is accessible
-        await this.renderMarkdown(this.markdown, this.src)
+        // after render, highlight text
         Prism.highlightAllUnder(this.shadowRoot, false);
     }
 
     // fetch the markdown and set it locally
     async fetchMarkdown(src) {
+        if(!src.includes('.md')) return '`src` attribute does not specify a Markdown file.';
         return await fetch(src)
             .then(async response => await response.text())
             .catch(e => 'Failed to read Markdown source.')
     }
 
-    async renderMarkdown(markdown, src) {
-        if(src) markdown = await this.fetchMarkdown(src);
-        if(!markdown) markdown = 'No Markdown specified or failed to load.';
+    async renderMarkdown(markdown) {
         // parse and render Markdown
         const reader = new commonmark.Parser();
         const writer = new commonmark.HtmlRenderer();
+        // assuming commmonmark library will properly sanitize code
         return html`${unsafeHTML(writer.render(reader.parse(markdown)))}`;
     }
 
