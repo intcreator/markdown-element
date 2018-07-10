@@ -23,9 +23,7 @@ import '@intcreator/markdown-element';
 The markdown source is taken directly from the `markdown` attribute supplied to the element.  The markdown supplied can be dynamically updated to change the rendered markdown.
 
 ```html
-<markdown-element markdown="This **demo** uses the `markdown` _attribute_, not `src`">
-    <div slot="markdown-html"></div>
-</markdown-element>
+<markdown-element markdown="This **demo** uses the `markdown` _attribute_, not `src`"></markdown-element>
 ```
 
 ### `src` attribute
@@ -33,9 +31,7 @@ The markdown source is taken directly from the `markdown` attribute supplied to 
 The `src` attribute can be used to load a markdown file through AJAX.  It overrides the `markdown` attribute.  The source can be dynamically updated to change the markdown file displayed.
 
 ```html
-<markdown-element src="./demo.md">
-    <div slot="markdown-html"></div>
-</markdown-element>
+<markdown-element src="./demo.md"></markdown-element>
 ```
 
 ### `<script>` tag
@@ -44,7 +40,6 @@ A `<script>` tag can be inserted inside of the `<markdown-element>` to provide t
 
 ```html
 <markdown-element>
-    <div slot="markdown-html"></div>
     <script type="text/markdown">
         This demo uses a `<script>` tag.
     </script>
@@ -55,7 +50,6 @@ A `<script>` tag can be inserted inside of the `<markdown-element>` to provide t
 
 Here are a few issues that need to be resolved before the 1.0 release:
 
-- Is it possible to get rid of the `<div slot="markdown-html"></div>` and still allow users to easily style the contents of `<markdown-element>` with custom styles?
 - Dynamically update markdown when changed in the script tag (if possible) or find another way to dynamically update multiline-markdown
 - Address security issues—Commonmark.js does not sanitize Markdown input by default, so this should at least be an option the user can select on `<markdown-element>`
 
