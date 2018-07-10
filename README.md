@@ -1,6 +1,8 @@
 # &lt;markdown-element&gt;
 
-A Markdown renderer that uses the Commonmark spec.  This is a replacement for the Polymer sponsored `<marked-element>`.  `<marked-element>` uses the somewhat outdated Marked parser, while `<markdown-element>` uses the up to date and better maintained [Commonmark parser](https://github.com/commonmark/commonmark.js).
+A lit-html element that renders Markdown using Commonmark.js.  This is a replacement for the Polymer sponsored `<marked-element>`.  `<marked-element>` uses the somewhat outdated Marked parser, while `<markdown-element>` uses the up to date and better maintained [Commonmark parser](https://github.com/commonmark/commonmark.js).
+
+This element is designed to be used with Polymer 3 projects.  If you want to use it elsewhere or figured out how to easily set it up by itself, please open an issue.
 
 ## Set up
 
@@ -65,7 +67,6 @@ Use the `safe` property if you are accepting user input that cannot be trusted (
 Here are a few issues that need to be resolved before the 1.0 release:
 
 - Dynamically update markdown when changed in the script tag (if possible) or find another way to dynamically update multiline-markdown
-- Address security issues—Commonmark.js does not sanitize Markdown input by default, so this should at least be an option the user can select on `<markdown-element>`
 
 ## Contributing
 
