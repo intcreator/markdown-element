@@ -23,9 +23,9 @@ import '@intcreator/markdown-element';
 The markdown source is taken directly from the `markdown` attribute supplied to the element.  The markdown supplied can be dynamically updated to change the rendered markdown.
 
 ```html
-    <markdown-element markdown="This **demo** uses the `markdown` _attribute_, not `src`">
-        <div slot="markdown-html"></div>
-    </markdown-element>
+<markdown-element markdown="This **demo** uses the `markdown` _attribute_, not `src`">
+    <div slot="markdown-html"></div>
+</markdown-element>
 ```
 
 ### `src` attribute
@@ -33,9 +33,9 @@ The markdown source is taken directly from the `markdown` attribute supplied to 
 The `src` attribute can be used to load a markdown file through AJAX.  It overrides the `markdown` attribute.  The source can be dynamically updated to change the markdown file displayed.
 
 ```html
-    <markdown-element src="./demo.md">
-        <div slot="markdown-html"></div>
-    </markdown-element>
+<markdown-element src="./demo.md">
+    <div slot="markdown-html"></div>
+</markdown-element>
 ```
 
 ### `<script>` tag
@@ -43,12 +43,12 @@ The `src` attribute can be used to load a markdown file through AJAX.  It overri
 A `<script>` tag can be inserted inside of the `<markdown-element>` to provide the markdown source.  It overrides the `markdown` and `src` attributes.  Support for changing this markdown source dynamically is not yet implemented.
 
 ```html
-    <markdown-element>
-        <div slot="markdown-html"></div>
-        <script type="text/markdown">
-            This demo uses a `<script>` tag.
-        </script>
-    </markdown-element>
+<markdown-element>
+    <div slot="markdown-html"></div>
+    <script type="text/markdown">
+        This demo uses a `<script>` tag.
+    </script>
+</markdown-element>
 ```
 
 ## Roadmap to 1.0

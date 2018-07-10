@@ -16,7 +16,7 @@
   ],
   "homepage": "https://github.com/intcreator/markdown-element",
   "bugs": "https://github.com/intcreator/markdown-element/issues",
-  "license": "SEE LICENSE IN LICENSE.txt",
+  "license": "BSD-3-Clause",
   "dependencies": {
     "@polymer/lit-element": "^0.5.2",
     "@polymer/polymer": "^3.0.2",
