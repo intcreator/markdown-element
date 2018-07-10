@@ -46,6 +46,20 @@ A `<script>` tag can be inserted inside of the `<markdown-element>` to provide t
 </markdown-element>
 ```
 
+## Properties
+
+### `safe`
+
+Use the `safe` property if you are accepting user input that cannot be trusted (to prevent [XSS attacks](https://en.wikipedia.org/wiki/Cross-site_scripting)).  This will prevent raw HTML and links beginning in `javascript:`, `vbscript:`, etc. from being rendered.  For more details, see the [Commonmark.js README](https://github.com/commonmark/commonmark.js#usage) explanation of `safe`.
+
+```html
+<markdown-element safe>
+    <script type="text/markdown">
+        This <button onclick="alert('JavaScript executed')">button</button> is evil
+    </script>
+</markdown-element>
+```
+
 ## Roadmap to 1.0
 
 Here are a few issues that need to be resolved before the 1.0 release:

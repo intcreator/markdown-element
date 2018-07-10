@@ -37,6 +37,18 @@
                     This demo uses a `<script>` tag.
                 </script>
             </markdown-element>
+            <h2>Successful XSS attempt</h2>
+            <markdown-element>
+                <script type="text/markdown">
+                    This <button onclick="alert('JavaScript executed')">button</button> is evil
+                </script>
+            </markdown-element>
+            <h2>Failed XSS attempt</h2>
+            <markdown-element safe>
+                <script type="text/markdown">
+                    This <button onclick="alert('JavaScript executed')">button</button> is evil
+                </script>
+            </markdown-element>
         </div>
     </body>
 </html>

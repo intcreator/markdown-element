@@ -34,6 +34,9 @@ class MarkdownElement extends LitElement {
             },
             renderedMarkdown: {
                 type: String
+            },
+            safe: {
+                type: Boolean
             }
         };
     }
@@ -83,7 +86,7 @@ class MarkdownElement extends LitElement {
     async renderMarkdown(markdown) {
         // parse and render Markdown
         const reader = new commonmark.Parser();
-        const writer = new commonmark.HtmlRenderer();
+        const writer = new commonmark.HtmlRenderer({ safe: this.safe });
         // assuming commmonmark library will properly sanitize code
         return html`${unsafeHTML(writer.render(reader.parse(markdown)))}`;
     }
