@@ -1,71 +1,91 @@
-import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
+import { LitElement, html } from '@polymer/lit-element/lit-element.js';
+import { unsafeHTML } from 'lit-html/lib/unsafe-html.js';
+import { until } from 'lit-html/lib/until.js';
 import 'commonmark/dist/commonmark.js';
 import 'prismjs/prism.js';
 
-class MarkdownElement extends PolymerElement {
+class MarkdownElement extends LitElement {
     
-    static get template() {
+    _render({ renderedMarkdown }) {        
         return html`
             <style>
+
+                ${ fetch('../node_modules/prismjs/themes/prism.css').then(res => res.text()) }
 
                 :host {
                     display: block;
                 }
 
             </style>
-
-            <slot name="markdown-html">
-                <div id="content">No Markdown specified or failed to load</div>
-            </slot>
-        `
+            ${ renderedMarkdown }
+        `;
     }
 
     static get properties() {
         return {
             markdown: {
-                type: String,
-                observer(newValue, oldValue) {
-                    // parse and render Markdown
-                    const reader = new commonmark.Parser();
-                    const writer = new commonmark.HtmlRenderer();
-                    const html = writer.render(reader.parse(newValue));
-                    // set HTML of slot (if given) or div
-                    const target = this.querySelector('[slot="markdown-html"]') || this.shadowRoot.querySelector('#content')
-                    target.innerHTML = html;
-                    // highlight all code blocks under the target
-                    const things = Prism.highlightAllUnder(target, false);
-                }
+                type: String
             },
             src: {
-                type: String,
-                observer(newValue, oldValue) {
-                    this.fetchMarkdown(newValue);
-                }
+                type: String
+            },
+            scriptTag: {
+                type: Object
+            },
+            renderedMarkdown: {
+                type: String
             }
         };
     }
 
+    // render the markdown using the `markdown` attribute
+    // `markdown` is set either by the user or the component
+    set markdown(markdown) {
+        this
+            .renderMarkdown(markdown)
+            .then(r => this.renderedMarkdown = r)
+    }
+
+    // fetch the markdown using the `src` attribute
+    // note: overrides `markdown` attribute
+    set src(src) {
+        this
+            .fetchMarkdown(src)
+            .then(r => this.markdown = r);
+    }
+
+    // set the markdown from the script tag, trimming the whitespace
+    // note: overrides `src` and `markdown` attributes
+    set scriptTag(scriptTag) {
+        if(scriptTag) this.markdown = scriptTag.text.trim();
+    }
+
     connectedCallback() {
         super.connectedCallback();
-        // return if markdown or a reference was passed in through a data binding
-        if(this.markdown || this.src) return;
-        // otherwise look for a script tag
-        const markdownScript = this.querySelector('script[type="text/markdown"]')
-        // set the markdown from the script tag, trimming the whitespace
-        this.markdown = markdownScript.text.trim();
-        // if there's no script tag, return
-        if(!markdownScript) return;
+        // look for a script tag
+        this.scriptTag = this.querySelector('script[type="text/markdown"]');
+        
+    }
+
+    async _didRender() {
+        // after render, highlight text
+        Prism.highlightAllUnder(this.shadowRoot, false);
     }
 
     // fetch the markdown and set it locally
     async fetchMarkdown(src) {
-        await fetch(src)
-            .then(async response => {
-                this.markdown = await response.text();
-            })
-            .catch(e => {
-                this.markdown = 'Failed to read Markdown source.'
-            })
+        if(!src.includes('.md')) return '`src` attribute does not specify a Markdown file.';
+        return await fetch(src)
+            .then(async response => await response.text())
+            .catch(e => 'Failed to read Markdown source.')
+    }
+
+    async renderMarkdown(markdown) {
+        // parse and render Markdown
+        const reader = new commonmark.Parser();
+        const writer = new commonmark.HtmlRenderer();
+        // assuming commmonmark library will properly sanitize code
+        return html`${unsafeHTML(writer.render(reader.parse(markdown)))}`;
     }
 
 }

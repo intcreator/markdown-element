@@ -8,12 +8,20 @@
     "type": "git",
     "url": "https://github.com/intcreator/markdown-element.git"
   },
+  "keywords": [
+    "markdown",
+    "commonmark",
+    "highlight",
+    "render"
+  ],
   "homepage": "https://github.com/intcreator/markdown-element",
   "bugs": "https://github.com/intcreator/markdown-element/issues",
-  "license" : "SEE LICENSE IN LICENSE.txt",
+  "license": "SEE LICENSE IN LICENSE.txt",
   "dependencies": {
+    "@polymer/lit-element": "^0.5.2",
     "@polymer/polymer": "^3.0.2",
     "commonmark": "^0.28.1",
+    "lit-html": "^0.10.2",
     "prismjs": "^1.15.0"
   },
   "devDependencies": {
