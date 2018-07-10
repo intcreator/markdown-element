@@ -2,6 +2,20 @@
 
 A Markdown renderer that uses the Commonmark spec.  This is a replacement for the Polymer sponsored `<marked-element>`.  `<marked-element>` uses the somewhat outdated Marked parser, while `<markdown-element>` uses the up to date and better maintained [Commonmark parser](https://github.com/commonmark/commonmark.js).
 
+## Set up
+
+Install and save to package.json:
+
+```
+npm i --save @intcreator/markdown-element
+```
+
+Import where needed:
+
+```javascript
+import '@intcreator/markdown-element';
+```
+
 ## Usage
 
 ### `markdown` attribute
@@ -43,7 +57,8 @@ Here are a few issues that need to be resolved before the 1.0 release:
 
 - Is it possible to get rid of the `<div slot="markdown-html"></div>` and still allow users to easily style the contents of `<markdown-element>` with custom styles?
 - Dynamically update markdown when changed in the script tag (if possible) or find another way to dynamically update multiline-markdown
+- Address security issues—Commonmark.js does not sanitize Markdown input by default, so this should at least be an option the user can select on `<markdown-element>`
 
 ## Contributing
 
-Open an issue or contact me on the Polymer Slack, Twitter, etc. @intcreator.
+Let's make this element even better!  Want to help?  Found a problem?  Open an issue or contact me on the Polymer Slack, Twitter, etc. @intcreator.
