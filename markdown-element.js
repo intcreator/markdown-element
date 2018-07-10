@@ -6,7 +6,7 @@ import 'prismjs/prism.js';
 
 class MarkdownElement extends LitElement {
     
-    _render({ markdown, src }) {        
+    _render({ renderedMarkdown }) {        
         return html`
             <style>
 
@@ -17,8 +17,7 @@ class MarkdownElement extends LitElement {
                 }
 
             </style>
-            <p>Render successful</p>
-            ${ until(this.renderedMarkdown, 'Loading...') }
+            ${ renderedMarkdown }
         `;
     }
 
