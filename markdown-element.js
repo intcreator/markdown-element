@@ -1,6 +1,5 @@
 import { LitElement, html } from '@polymer/lit-element/lit-element.js';
 import { unsafeHTML } from 'lit-html/lib/unsafe-html.js';
-import { until } from 'lit-html/lib/until.js';
 import 'commonmark/dist/commonmark.js';
 import 'prismjs/prism.js';
 
@@ -23,21 +22,11 @@ class MarkdownElement extends LitElement {
 
     static get properties() {
         return {
-            markdown: {
-                type: String
-            },
-            src: {
-                type: String
-            },
-            scriptTag: {
-                type: Object
-            },
-            renderedMarkdown: {
-                type: String
-            },
-            safe: {
-                type: Boolean
-            }
+            markdown: String,
+            src: String,
+            scriptTag: Object,
+            renderedMarkdown: String,
+            safe: Boolean
         };
     }
 
