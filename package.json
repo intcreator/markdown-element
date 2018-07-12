@@ -1,7 +1,7 @@
 {
   "description": "A Markdown renderer that uses the Commonmark spec",
   "name": "@intcreator/markdown-element",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "author": "Brandon der Blätter (https://intcreator.com)",
   "main": "markdown-element.js",
   "repository": {
