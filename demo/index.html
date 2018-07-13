@@ -13,9 +13,7 @@
             // import '@polymer/iron-demo-helpers/demo-pages-shared-styles';
             // import '@polymer/iron-demo-helpers/demo-snippet';
         </script>
-
         <script type="module" src="../markdown-element.js"></script>
-
         <style>
             body {
                 font-family: 'Helvetica', sans-serif;
@@ -26,7 +24,7 @@
         <div class="vertical-section-container centered">
             <h1>Basic markdown-element demo</h1>
             <h2><code>markdown</code> attribute</h2>
-            <markdown-element markdown="This **demo** uses the `markdown` _attribute_, not `src`"></markdown-element>
+            <markdown-element id="markdown"></markdown-element>
             <h2><code>src</code> attribute</h2>
             <markdown-element src="./demo.md"></markdown-element>
             <h2><code>src</code> not a markdown file</h2>
@@ -49,6 +47,10 @@
                     This <button onclick="alert('JavaScript executed')">button</button> is evil
                 </script>
             </markdown-element>
+            <my-element></my-element>
         </div>
+        <script>
+            document.querySelector('#markdown').markdown = "This **demo** uses the `markdown` _attribute_, not `src`";
+        </script>
     </body>
 </html>
