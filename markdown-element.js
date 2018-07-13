@@ -4,8 +4,8 @@ import 'commonmark/dist/commonmark.js';
 import 'prismjs/prism.js';
 
 class MarkdownElement extends LitElement {
-    
-    _render({ renderedMarkdown }) {        
+
+    _render() {
         return html`
             <style>
 
@@ -16,7 +16,7 @@ class MarkdownElement extends LitElement {
                 }
 
             </style>
-            ${ renderedMarkdown }
+            ${ this.renderedMarkdown }
         `;
     }
 
@@ -25,17 +25,16 @@ class MarkdownElement extends LitElement {
             markdown: String,
             src: String,
             scriptTag: Object,
-            renderedMarkdown: String,
             safe: Boolean
         };
     }
 
     // render the markdown using the `markdown` attribute
     // `markdown` is set either by the user or the component
-    set markdown(markdown) {
-        this
-            .renderMarkdown(markdown)
-            .then(r => this.renderedMarkdown = r)
+    get renderedMarkdown() {
+        return this.markdown ?
+          this.renderMarkdown(this.markdown) :
+          '';
     }
 
     // fetch the markdown using the `src` attribute
@@ -49,17 +48,16 @@ class MarkdownElement extends LitElement {
     // set the markdown from the script tag, trimming the whitespace
     // note: overrides `src` and `markdown` attributes
     set scriptTag(scriptTag) {
-        if(scriptTag) this.markdown = scriptTag.text.trim();
+        if (scriptTag) this.markdown = scriptTag.text.trim();
     }
 
     connectedCallback() {
         super.connectedCallback();
         // look for a script tag
         this.scriptTag = this.querySelector('script[type="text/markdown"]');
-        
     }
 
-    async _didRender() {
+    _didRender() {
         // after render, highlight text
         Prism.highlightAllUnder(this.shadowRoot, false);
     }
@@ -72,7 +70,7 @@ class MarkdownElement extends LitElement {
             .catch(e => 'Failed to read Markdown source.')
     }
 
-    async renderMarkdown(markdown) {
+    renderMarkdown(markdown) {
         // parse and render Markdown
         const reader = new commonmark.Parser();
         const writer = new commonmark.HtmlRenderer({ safe: this.safe });
