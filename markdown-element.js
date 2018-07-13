@@ -33,8 +33,8 @@ class MarkdownElement extends LitElement {
     // `markdown` is set either by the user or the component
     get renderedMarkdown() {
         return this.markdown ?
-          this.renderMarkdown(this.markdown) :
-          '';
+            this.renderMarkdown(this.markdown) :
+            '';
     }
 
     // fetch the markdown using the `src` attribute
@@ -48,7 +48,7 @@ class MarkdownElement extends LitElement {
     // set the markdown from the script tag, trimming the whitespace
     // note: overrides `src` and `markdown` attributes
     set scriptTag(scriptTag) {
-        if (scriptTag) this.markdown = scriptTag.text.trim();
+        if(scriptTag) this.markdown = scriptTag.text.trim();
     }
 
     connectedCallback() {
