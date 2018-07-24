@@ -26,7 +26,7 @@
         <div class="vertical-section-container centered">
             <h1>Basic markdown-element demo</h1>
             <h2><code>markdown</code> attribute</h2>
-            <markdown-element markdown="This **demo** uses the `markdown` _attribute_, not `src`"></markdown-element>
+            <markdown-element markdown="This **demo** uses the `markdown` _property_, not `src`"></markdown-element>
             <h2><code>src</code> attribute</h2>
             <markdown-element src="./demo.md"></markdown-element>
             <h2><code>src</code> not a markdown file</h2>
@@ -49,6 +49,33 @@
                     This <button onclick="alert('JavaScript executed')">button</button> is evil
                 </script>
             </markdown-element>
+            <h2>As a subcomponent</h2>
+            <my-element text="This _markdown_ is passed **down**"></my-element>
+            <script type="module">
+                import { LitElement, html } from '@polymer/lit-element';
+
+                class MyElement extends LitElement {
+
+                    static get properties() { return { text: String }}
+
+                    _render({ text }) {
+                        return html`
+                            <style>
+                                :host {
+                                    display: block;
+                                    padding: 1em;
+                                    border: solid green 1px;
+                                }
+                            </style>
+                            <p>This component has a &lt;markdown-element&gt;</p>
+                            <markdown-element markdown$=${ text }></markdown-element>
+                        `;
+                    }
+                
+                }
+
+                customElements.define('my-element', MyElement);
+            </script>
         </div>
     </body>
 </html>
